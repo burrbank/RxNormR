@@ -1,8 +1,16 @@
 Package: RxNormR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: An R Interface to RxNorm
 Version: 0.1.0
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: person("Matthew", "Pancia", email = "msp@themsp.org", role = c("aut", "cre"))
+Description: This package provides an R interface to the RxNorm (https://
+    www.nlm.nih.gov/research/umls/rxnorm/) API.
+License: MIT
 LazyData: TRUE
+Imports:
+    httr,
+    xml2,
+    rvest
+URL: https://github.com/mpancia/RxNormR
+BugReports: https://github.com/mpancia/RxNormR/issues
+RoxygenNote: 5.0.1
