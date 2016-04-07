@@ -7,8 +7,7 @@
 rx_approximateTerm(term, maxEntries = 20, option = 0)
 }
 \value{
-The returned comment field contains messages about the processing
-of the operation.
+Comment field contains messages about the processing of the operation.
 }
 \description{
 Do an approximate match search to determine the strings in the data set that

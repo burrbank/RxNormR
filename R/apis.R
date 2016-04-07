@@ -3,7 +3,7 @@
 # /rxcui/{rxcui}/filter
 # /rxcui?idtype
 # /rxcui?name
-# /allconcepts
+# DONE /allconcepts
 # /rxcui/{rxcui}/allndcs
 # /rxcui/{rxcui}/allProperties
 # /rxcui/{rxcui}/allrelated
@@ -39,7 +39,7 @@ NULL
 #' @return Some results.
 #' @export
 rx_drugs <- function(drugName) {
-  params = list(name = drugName)
+  params <- list(name = drugName)
   r <- GET(restBaseURL, path = paste0("REST/drugs.json"), query = params)
   parse_results(r)
 }
@@ -83,8 +83,7 @@ rx_termtypes <- function() {
 #' most closely match the search string.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getApproximateMatch}{RxNorm}.
 #'
-#' @return The returned comment field contains messages about the processing
-#' of the operation.
+#' @return Comment field contains messages about the processing of the operation.
 #' @export
 rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
   params <- list(term = term, maxEntries = maxEntries, option = option)
@@ -92,4 +91,15 @@ rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
   parse_results(r)
 }
 
-
+#' Get RxNorm Concept Information
+#'
+#' Get concept information for specified term types.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllConceptsByTTY}{RxNorm}.
+#'
+#' @return Content information
+#' @export
+rx_allconcepts <- function(tty) {
+  params <- list(tty = tty)
+  r <- GET(restBaseURL, path = paste0("REST/allconcepts.json"), query = params)
+  parse_results(r)
+}
