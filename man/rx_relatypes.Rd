@@ -11,5 +11,6 @@ Relationship names.
 }
 \description{
 Return the valid relationship names.
+See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRelaTypes}{RxNorm}.
 }
 

@@ -11,5 +11,6 @@ Property categories.
 }
 \description{
 Return the RxNorm property categories.
+See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getPropCategories}{RxNorm}.
 }
 

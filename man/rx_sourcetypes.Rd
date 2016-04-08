@@ -11,5 +11,6 @@ Abbreviated source types.
 }
 \description{
 Return vocabulary of abbreviated source types.
+See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getSourceTypes}{RxNorm}.
 }
 

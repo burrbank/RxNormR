@@ -262,6 +262,7 @@ date_helper <- function(input_date){
 #' Get property categories.
 #'
 #' Return the RxNorm property categories.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getPropCategories}{RxNorm}.
 #'
 #' @return Property categories.
 #' @export
@@ -273,6 +274,7 @@ rx_propCategories <- function() {
 #' Get property names.
 #'
 #' Return the valid property names.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getPropNames}{RxNorm}.
 #'
 #' @return Property names.
 #' @export
@@ -284,6 +286,7 @@ rx_propnames <- function() {
 #' Get relationship names.
 #'
 #' Return the valid relationship names.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRelaTypes}{RxNorm}.
 #'
 #' @return Relationship names.
 #' @export
@@ -295,6 +298,7 @@ rx_relatypes <- function() {
 #' Get abbreviated source types.
 #'
 #' Return vocabulary of abbreviated source types.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getSourceTypes}{RxNorm}.
 #'
 #' @return Abbreviated source types.
 #' @export
@@ -308,6 +312,7 @@ rx_sourcetypes<- function() {
 #' Return spelling suggestions for a given term. The suggestions are RxNorm
 #' terms contained in the current version, listed in decreasing order of
 #' closeness to the original phrase.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getSpellingSuggestions}{RxNorm}.
 #'
 #' @param name Name for which spelling suggestions are to be generated.
 #'

@@ -16,5 +16,6 @@ RxNorm terms.
 Return spelling suggestions for a given term. The suggestions are RxNorm
 terms contained in the current version, listed in decreasing order of
 closeness to the original phrase.
+See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getSpellingSuggestions}{RxNorm}.
 }
 

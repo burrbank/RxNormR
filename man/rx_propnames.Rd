@@ -11,5 +11,6 @@ Property names.
 }
 \description{
 Return the valid property names.
+See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getPropNames}{RxNorm}.
 }
 
