@@ -1,10 +1,10 @@
 # All REST resource we want to wrap
 #
-# /rxcui/{rxcui}/filter
+# DONE /rxcui/{rxcui}/filter
 # DONE /rxcui?idtype
 # DONE /rxcui?name
 # DONE /allconcepts
-# /rxcui/{rxcui}/allndcs
+# DONE /rxcui/{rxcui}/allndcs
 # /rxcui/{rxcui}/allProperties
 # /rxcui/{rxcui}/allrelated
 # DONE /approximateTerm
@@ -46,6 +46,24 @@ NULL
 rx_drugs <- function(drugName) {
   params <- list(name = drugName)
   r <- GET(restBaseURL, path = paste0("REST/drugs.json"), query = params)
+  parse_results(r)
+}
+
+#' Determine if a property exists for a concept
+#'
+#' Determine if a property exists for a concept and (optionally) matches the
+#' specified property value. Returns the RxCUI if the property name matches.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_filterByProperty}{RxNorm}.
+#'
+#' @param propName Property name
+#' @param propValue (optional) Property value.
+#'
+#' @return RxCUI if the property name matches.
+#' @export
+rx_filter <- function(rxcui, propName, propValues = "IN"){
+  prams <- list(propName = propName, propValues = propValues)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/filter"),
+           query = prams)
   parse_results(r)
 }
 
@@ -159,6 +177,43 @@ rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
 rx_allconcepts <- function(tty) {
   params <- list(tty = tty)
   r <- GET(restBaseURL, path = paste0("REST/allconcepts.json"), query = params)
+  parse_results(r)
+}
+
+#' Get the National Drug Codes (NDCs) for the RxNorm concept.
+#'
+#' The NDCs are returned in the CMS 11-digit NDC derivative form, along with
+#' the start and end times (format:"YYYYMM") corresponding to the time interval
+#' in which the NDC was associated with the concept.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllNDCs}{RxNorm}.
+#'
+#' @param history (optional) if the value is 1 or not specified, all NDCs, past
+#' or present, are returned. A value of 0 indicates only currently associated
+#' NDCs with the concept will be returned.
+#'
+#' @return NDC, along with the start and end times (format:"YYYYMM")
+#' @export
+rx_allndcs <- function(rxcui, history = 1){
+  prams <- list(history = history)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/allndcs"),
+           query = prams)
+  parse_results(r)
+}
+
+#' Get properties for a specified RxNorm concept.
+#'
+#' Return the properties for a specified RxNorm concept. Information returned
+#' includes property name, value and category
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllProperties}{RxNorm}.
+#'
+#' @param prop Property categories for the properties to be returned.
+#'
+#' @return Property name, value and category.
+#' @export
+rx_allProperties <- function(rxcui, prop = "all"){
+  prams <- list(prop = prop)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/allProperties"),
+           query = prams)
   parse_results(r)
 }
 
@@ -332,3 +387,5 @@ rx_spellingsuggestions <- function(name) {
 # }
 #
 NULL
+
+#GET("https://rxnav.nlm.nih.gov/REST/rxcui/7052/filter/",query =list(propName = "TTY"))
