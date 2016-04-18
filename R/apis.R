@@ -1,18 +1,18 @@
 # All REST resource we want to wrap
 #
-# /rxcui/{rxcui}/filter
+# DONE /rxcui/{rxcui}/filter
 # DONE /rxcui?idtype
 # DONE /rxcui?name
 # DONE /allconcepts
-# /rxcui/{rxcui}/allndcs
-# /rxcui/{rxcui}/allProperties
-# /rxcui/{rxcui}/allrelated
+# DONE /rxcui/{rxcui}/allndcs
+# DONE /rxcui/{rxcui}/allProperties
+# DONE /rxcui/{rxcui}/allrelated
 # DONE /approximateTerm
 # DONE /displaynames
 # DONE /drugs
 # DONE /idtypes
 # DONE /brands
-# /rxcui/{rxcui}/ndcs
+# DONE /rxcui/{rxcui}/ndcs
 # DONE /ndcproperties
 # DONE/ndcstatus
 #     Review this one, lmk if the error handeling and date helper are fine.
@@ -20,13 +20,14 @@
 # DONE /propCategories
 # DONE /propnames
 # /rxcui/{rxcui}/proprietary
-# /rxcui/{rxcui}/related?rela
-# /rxcui/{rxcui}/related?tty
+#    Need a valid UMLS license?
+# DONE /rxcui/{rxcui}/related?rela
+# DONE /rxcui/{rxcui}/related?tty
 # DONE /relatypes
-# /rxcui/{rxcui}/properties
-# /rxcui/{rxcui}/status
+# DONE /rxcui/{rxcui}/properties
+# DONE /rxcui/{rxcui}/status
 # DONE /version
-# /rxcui/{rxcui}/property
+# DONE /rxcui/{rxcui}/property
 # DONE /sourcetypes
 # DONE /spellingsuggestions
 # DONE /termtypes
@@ -46,6 +47,24 @@ NULL
 rx_drugs <- function(drugName) {
   params <- list(name = drugName)
   r <- GET(restBaseURL, path = paste0("REST/drugs.json"), query = params)
+  parse_results(r)
+}
+
+#' Determine if a property exists for a concept
+#'
+#' Determine if a property exists for a concept and (optionally) matches the
+#' specified property value. Returns the RxCUI if the property name matches.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_filterByProperty}{RxNorm}.
+#'
+#' @param propName Property name
+#' @param propValue (optional) Property value.
+#'
+#' @return RxCUI if the property name matches.
+#' @export
+rx_filter <- function(rxcui, propName, propValues = "IN"){
+  prams <- list(propName = propName, propValues = propValues)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/filter"),
+           query = prams)
   parse_results(r)
 }
 
@@ -162,6 +181,60 @@ rx_allconcepts <- function(tty) {
   parse_results(r)
 }
 
+#' Get the National Drug Codes (NDCs) for the RxNorm concept.
+#'
+#' The NDCs are returned in the CMS 11-digit NDC derivative form, along with
+#' the start and end times (format:"YYYYMM") corresponding to the time interval
+#' in which the NDC was associated with the concept.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllNDCs}{RxNorm}.
+#'
+#' @param history (optional) if the value is 1 or not specified, all NDCs, past
+#' or present, are returned. A value of 0 indicates only currently associated
+#' NDCs with the concept will be returned.
+#'
+#' @return NDC, along with the start and end times (format:"YYYYMM")
+#' @export
+rx_allndcs <- function(rxcui, history = 1){
+  prams <- list(history = history)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/allndcs"),
+           query = prams)
+  parse_results(r)
+}
+
+#' Get properties for a specified RxNorm concept.
+#'
+#' Return the properties for a specified RxNorm concept. Information returned
+#' includes property name, value and category
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllProperties}{RxNorm}.
+#'
+#' @param prop Property categories for the properties to be returned.
+#'
+#' @return Property name, value and category.
+#' @export
+rx_allProperties <- function(rxcui, prop = "all"){
+  prams <- list(prop = prop)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/allProperties"),
+           query = prams)
+  parse_results(r)
+}
+
+#' Get all the related RxNorm concepts for a given RxNorm identifier.
+#'
+#' all the related RxNorm concepts for a given RxNorm identifier. This includes
+#' concepts of term types "IN", "MIN", "PIN", "BN", "SBD", "SBDC", "SBDF",
+#' "SBDG", "SCD", "SCDC", "SCDF", "SCDG", "DF", "DFG", "BPCK" and "GPCK".
+#' See \href{https://rxnav.nlm.nih.gov/RxNavViews.html#label:appendix}{default paths}
+#' for the paths traveled to get concepts for each term type.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllRelatedInfo}{RxNorm}.
+#'
+#'
+#' @return Related RxNorm concepts.
+#' @export
+rx_allrelated <- function(rxcui){
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/allrelated"))
+  parse_results(r)
+}
+
 #' Get RxNav names
 #'
 #' Gets the names used by RxNav for auto completion. A large list which includes
@@ -186,9 +259,23 @@ rx_displaynames <- function() {
 #' @return Brand names
 #' @export
 rx_brands <- function(ingredientids) {
-  ingredientids <- paste(unlist(ingredientids), collapse = ' ')
+  ingredientids <- paste(ingredientids, collapse = ' ')
   params <- list(ingredientids = ingredientids)
   r <- GET(restBaseURL, path = paste0("REST/brands.json"), query = params)
+  parse_results(r)
+}
+
+#' Get the active National Drug Codes (NDCs) for the RxNorm concept.
+#'
+#' Return the active National Drug Codes (NDCs) for the RxNorm concept. Active
+#' NDCs are those NDCs present in the current version of RxNorm. Only the NDCs
+#' curated by RxNorm (i.e., with SAB = RXNORM) are returned by this function.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getNDCs}{RxNorm}.
+#'
+#' @return National Drug Codes (NDCs) for the RxNorm concept.
+#' @export
+rx_ndcs <- function(rxcui){
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/ndcs"))
   parse_results(r)
 }
 
@@ -283,6 +370,55 @@ rx_propnames <- function() {
   parse_results(r)
 }
 
+### Apparently we need a valid UMLS license to use this function. Does that
+### mean anything to you Matt?
+# rx_proprietary <- function(rxcui){
+#   prams <- list(history = history)
+#   r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/proprietary"),
+#            query = prams)
+#   parse_results(r)
+# }
+NULL
+
+#' Get the related RxNorm identifiers of an RxNorm concept by relational attribute.
+#'
+#' This function returns the related RxNorm identifiers of an RxNorm concept
+#' specified by a relational attribute.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRelatedByRelationship}{RxNorm}.
+#'
+#' @param rela A list of the relationship attribute names such as
+#' "tradename_of", "has_form", "isa", etc. This field is required. See the
+#' {\link{rx_relatypes}} example for the valid relationship attributes.
+#'
+#' @return Related RxNorm identifiers.
+#' @export
+rx_related_rela <- function(rxcui, rela){
+  prams <- list(rela = paste(rela, collapse = ' '))
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/related"),
+           query = prams)
+  parse_results(r)
+}
+
+#' Get the related RxNorm identifiers of an RxNorm concept by term types.
+#'
+#' This function returns the related RxNorm identifiers of an RxNorm concept
+#' specified by one or more term types.
+#' See \href{https://rxnav.nlm.nih.gov/RxNavViews.html#label:appendix}{default paths}
+#' for the paths traveled to get concepts for each term type.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRelatedByType}{RxNorm}.
+#'
+#' @param tty - a list of one or more RxNorm term types. This field is required.
+#' See the {\link{rx_termtypes}} example for the valid term types.
+#'
+#' @return Related RxNorm identifiers.
+#' @export
+rx_related_tty <- function(rxcui, tty){
+  prams <- list(tty = paste(tty, collapse = ' '))
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/related"),
+           query = prams)
+  parse_results(r)
+}
+
 #' Get relationship names.
 #'
 #' Return the valid relationship names.
@@ -292,6 +428,59 @@ rx_propnames <- function() {
 #' @export
 rx_relatypes <- function() {
   r <- GET(restBaseURL, path = paste0("REST/relatypes.json"))
+  parse_results(r)
+}
+
+#' Get the RxNorm concept properties.
+#'
+#' Return the RxNorm concept properties: Concept name, Concept identifier
+#' (RxCUI), Synonym, RxNorm term type, Language of the term, UMLS CUI,
+#' Suppress flag
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRxConceptProperties}{RxNorm}.
+#'
+#' @return Concept properties.
+#' @export
+rx_properties <- function(rxcui){
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/properties"))
+  parse_results(r)
+}
+
+#' Get the status for a concept.
+#'
+#' Return the status for a concept. Possible values are:
+#' Active (The concept is in the current data set and has a non-obsolete term
+#' from the RxNorm vocabulary)
+#' Alien (The concept exists in the current data set, but contains only terms
+#' from vocabularies other than RxNorm.)
+#' Remapped (The concept has been remapped to one or more concepts in the
+#' current data set.)
+#' Retired (The concept no longer exists in the current data set, or contains
+#' only obsolete terms.)
+#' Unknown (The concept identifier is invalid.)
+#'
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRxcuiStatus}{RxNorm}.
+#'
+#' @return Concept status.
+#' @export
+rx_status <- function(rxcui){
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/status"))
+  parse_results(r)
+}
+
+#' Get the property values associated with the property name.
+#'
+#' This function returns the property values associated with the property name.
+#' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRxProperty}{RxNorm}.
+#'
+#' @param propName the property name. See {\link{rx_propnames}} for the list of
+#' valid property names
+#'
+#' @return Property values associated with the property name.
+#' @export
+rx_property <- function(rxcui, propName){
+  prams <- list(propName = propName)
+  r <- GET(restBaseURL, path = paste0("REST/rxcui/", rxcui,"/property"),
+           query = prams)
   parse_results(r)
 }
 
@@ -324,11 +513,3 @@ rx_spellingsuggestions <- function(name) {
            query = params)
   parse_results(r)
 }
-
-# <- function() {
-#   params <-
-#   r <- GET(restBaseURL, path = paste0())
-#   parse_results(r)
-# }
-#
-NULL
