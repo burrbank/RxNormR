@@ -56,8 +56,9 @@ rx_drugs <- function(drugName) {
 #' specified property value. Returns the RxCUI if the property name matches.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_filterByProperty}{RxNorm}.
 #'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @param propName Property name
-#' @param propValue (optional) Property value.
+#' @param propValues (optional) Property value.
 #'
 #' @return RxCUI if the property name matches.
 #' @export
@@ -159,7 +160,9 @@ rx_rxcui_name <- function(name, srclist = NULL, allsrc = 0, search = 0) {
 #' Do an approximate match search to determine the strings in the data set that
 #' most closely match the search string.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getApproximateMatch}{RxNorm}.
-#'
+#' @param term Search string.
+#' @param maxEntries The maximum number of entries to return (default 20)
+#' @param option Special processing options.  0 - no special processing. 1 - return only information for terms contained in valid RxNorm concepts. That is, the term must either be from the RxNorm vocabulary or a synonym of a (non-suppressed) term in the RxNorm vocabulary.
 #' @return Approximate terms.
 #' @export
 rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
@@ -172,7 +175,7 @@ rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
 #'
 #' Get concept information for specified term types.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllConceptsByTTY}{RxNorm}.
-#'
+#' @param tty A list of one or more RxNorm term types.
 #' @return Content information
 #' @export
 rx_allconcepts <- function(tty) {
@@ -188,6 +191,7 @@ rx_allconcepts <- function(tty) {
 #' in which the NDC was associated with the concept.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllNDCs}{RxNorm}.
 #'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @param history (optional) if the value is 1 or not specified, all NDCs, past
 #' or present, are returned. A value of 0 indicates only currently associated
 #' NDCs with the concept will be returned.
@@ -208,7 +212,7 @@ rx_allndcs <- function(rxcui, history = 1){
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllProperties}{RxNorm}.
 #'
 #' @param prop Property categories for the properties to be returned.
-#'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @return Property name, value and category.
 #' @export
 rx_allProperties <- function(rxcui, prop = "all"){
@@ -227,6 +231,7 @@ rx_allProperties <- function(rxcui, prop = "all"){
 #' for the paths traveled to get concepts for each term type.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getAllRelatedInfo}{RxNorm}.
 #'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #'
 #' @return Related RxNorm concepts.
 #' @export
@@ -272,6 +277,7 @@ rx_brands <- function(ingredientids) {
 #' curated by RxNorm (i.e., with SAB = RXNORM) are returned by this function.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getNDCs}{RxNorm}.
 #'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @return National Drug Codes (NDCs) for the RxNorm concept.
 #' @export
 rx_ndcs <- function(rxcui){
@@ -386,6 +392,7 @@ NULL
 #' specified by a relational attribute.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRelatedByRelationship}{RxNorm}.
 #'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @param rela A list of the relationship attribute names such as
 #' "tradename_of", "has_form", "isa", etc. This field is required. See the
 #' {\link{rx_relatypes}} example for the valid relationship attributes.
@@ -406,7 +413,7 @@ rx_related_rela <- function(rxcui, rela){
 #' See \href{https://rxnav.nlm.nih.gov/RxNavViews.html#label:appendix}{default paths}
 #' for the paths traveled to get concepts for each term type.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRelatedByType}{RxNorm}.
-#'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @param tty - a list of one or more RxNorm term types. This field is required.
 #' See the {\link{rx_termtypes}} example for the valid term types.
 #'
@@ -437,7 +444,7 @@ rx_relatypes <- function() {
 #' (RxCUI), Synonym, RxNorm term type, Language of the term, UMLS CUI,
 #' Suppress flag
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRxConceptProperties}{RxNorm}.
-#'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @return Concept properties.
 #' @export
 rx_properties <- function(rxcui){
@@ -459,7 +466,7 @@ rx_properties <- function(rxcui){
 #' Unknown (The concept identifier is invalid.)
 #'
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRxcuiStatus}{RxNorm}.
-#'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @return Concept status.
 #' @export
 rx_status <- function(rxcui){
@@ -472,6 +479,7 @@ rx_status <- function(rxcui){
 #' This function returns the property values associated with the property name.
 #' See \href{https://rxnav.nlm.nih.gov/RxNormAPIs.html#uLink=RxNorm_REST_getRxProperty}{RxNorm}.
 #'
+#' @param rxcui The RxNorm Concept Unique Identifier (RXCUI)
 #' @param propName the property name. See {\link{rx_propnames}} for the list of
 #' valid property names
 #'

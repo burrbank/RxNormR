@@ -6,6 +6,9 @@
 \usage{
 rx_properties(rxcui)
 }
+\arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+}
 \value{
 Concept properties.
 }

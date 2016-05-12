@@ -6,6 +6,13 @@
 \usage{
 rx_approximateTerm(term, maxEntries = 20, option = 0)
 }
+\arguments{
+\item{term}{Search string.}
+
+\item{maxEntries}{The maximum number of entries to return (default 20)}
+
+\item{option}{Special processing options.  0 - no special processing. 1 - return only information for terms contained in valid RxNorm concepts. That is, the term must either be from the RxNorm vocabulary or a synonym of a (non-suppressed) term in the RxNorm vocabulary.}
+}
 \value{
 Approximate terms.
 }

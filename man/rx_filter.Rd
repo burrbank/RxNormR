@@ -7,9 +7,11 @@
 rx_filter(rxcui, propName, propValues = "IN")
 }
 \arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+
 \item{propName}{Property name}
 
-\item{propValue}{(optional) Property value.}
+\item{propValues}{(optional) Property value.}
 }
 \value{
 RxCUI if the property name matches.

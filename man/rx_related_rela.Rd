@@ -7,6 +7,8 @@
 rx_related_rela(rxcui, rela)
 }
 \arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+
 \item{rela}{A list of the relationship attribute names such as
 "tradename_of", "has_form", "isa", etc. This field is required. See the
 {\link{rx_relatypes}} example for the valid relationship attributes.}

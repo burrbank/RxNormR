@@ -6,6 +6,9 @@
 \usage{
 rx_allconcepts(tty)
 }
+\arguments{
+\item{tty}{A list of one or more RxNorm term types.}
+}
 \value{
 Content information
 }

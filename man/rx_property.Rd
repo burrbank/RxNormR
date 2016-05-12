@@ -7,6 +7,8 @@
 rx_property(rxcui, propName)
 }
 \arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+
 \item{propName}{the property name. See {\link{rx_propnames}} for the list of
 valid property names}
 }

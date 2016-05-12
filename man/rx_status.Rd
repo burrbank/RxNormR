@@ -6,6 +6,9 @@
 \usage{
 rx_status(rxcui)
 }
+\arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+}
 \value{
 Concept status.
 }

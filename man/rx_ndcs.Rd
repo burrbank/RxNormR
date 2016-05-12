@@ -6,6 +6,9 @@
 \usage{
 rx_ndcs(rxcui)
 }
+\arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+}
 \value{
 National Drug Codes (NDCs) for the RxNorm concept.
 }

@@ -7,6 +7,8 @@
 rx_allProperties(rxcui, prop = "all")
 }
 \arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+
 \item{prop}{Property categories for the properties to be returned.}
 }
 \value{

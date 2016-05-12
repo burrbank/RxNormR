@@ -7,6 +7,8 @@
 rx_allndcs(rxcui, history = 1)
 }
 \arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+
 \item{history}{(optional) if the value is 1 or not specified, all NDCs, past
 or present, are returned. A value of 0 indicates only currently associated
 NDCs with the concept will be returned.}

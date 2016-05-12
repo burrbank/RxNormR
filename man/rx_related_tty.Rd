@@ -7,6 +7,8 @@
 rx_related_tty(rxcui, tty)
 }
 \arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+
 \item{tty}{- a list of one or more RxNorm term types. This field is required.
 See the {\link{rx_termtypes}} example for the valid term types.}
 }

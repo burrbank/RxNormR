@@ -6,6 +6,9 @@
 \usage{
 rx_allrelated(rxcui)
 }
+\arguments{
+\item{rxcui}{The RxNorm Concept Unique Identifier (RXCUI)}
+}
 \value{
 Related RxNorm concepts.
 }
