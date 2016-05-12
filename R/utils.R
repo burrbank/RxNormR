@@ -1,5 +1,3 @@
-#' @importFrom stringr str_split
-NULL
 restBaseURL <- "https://rxnav.nlm.nih.gov/REST/"
 
 # Exhaust the search result over all pages.
