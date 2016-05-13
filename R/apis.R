@@ -46,7 +46,7 @@ NULL
 #' @export
 rx_drugs <- function(drugName) {
   params <- list(name = drugName)
-  r <- GET(restBaseURL, path = paste0("REST/drugs.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/drugs.json", query = params)
   parse_results(r)
 }
 
@@ -76,7 +76,7 @@ rx_filter <- function(rxcui, propName, propValues = "IN"){
 #' @return Identifier type information.
 #' @export
 rx_idtypes <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/idtypes.json"))
+  r <- GET(restBaseURL, path = "REST/idtypes.json")
   parse_results(r)
 }
 
@@ -87,7 +87,7 @@ rx_idtypes <- function() {
 #' @return Version information.
 #' @export
 rx_version <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/version.json"))
+  r <- GET(restBaseURL, path = "REST/version.json")
   parse_results(r)
 }
 
@@ -98,7 +98,7 @@ rx_version <- function() {
 #' @return Term type information.
 #' @export
 rx_termtypes <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/termtypes.json"))
+  r <- GET(restBaseURL, path = "REST/termtypes.json")
   parse_results(r)
 }
 
@@ -121,7 +121,7 @@ rx_termtypes <- function() {
 #' @export
 rx_rxcui_idtype <- function(idtype, id, allsrc = 0) {
   params <-list(idtype = idtype, id = id, allsrc = allsrc)
-  r <- GET(restBaseURL, path = paste0("REST/rxcui.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/rxcui.json", query = params)
   parse_results(r)
 }
 
@@ -151,7 +151,7 @@ rx_rxcui_idtype <- function(idtype, id, allsrc = 0) {
 rx_rxcui_name <- function(name, srclist = NULL, allsrc = 0, search = 0) {
   params <- list(name = name, srclist = srclist, allsrc = allsrc,
                  search = search)
-  r <- GET(restBaseURL, path = paste0("REST/rxcui.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/rxcui.json", query = params)
   parse_results(r)
 }
 
@@ -167,7 +167,7 @@ rx_rxcui_name <- function(name, srclist = NULL, allsrc = 0, search = 0) {
 #' @export
 rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
   params <- list(term = term, maxEntries = maxEntries, option = option)
-  r <- GET(restBaseURL, path = paste0("REST/approximateTerm.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/approximateTerm.json", query = params)
   parse_results(r)
 }
 
@@ -180,7 +180,7 @@ rx_approximateTerm <- function(term, maxEntries = 20, option = 0) {
 #' @export
 rx_allconcepts <- function(tty) {
   params <- list(tty = tty)
-  r <- GET(restBaseURL, path = paste0("REST/allconcepts.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/allconcepts.json", query = params)
   parse_results(r)
 }
 
@@ -249,7 +249,7 @@ rx_allrelated <- function(rxcui){
 #' @return Names of ingredients, brands, and branded packs.
 #' @export
 rx_displaynames <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/displaynames.json"))
+  r <- GET(restBaseURL, path = "REST/displaynames.json")
   parse_results(r)
 }
 
@@ -266,7 +266,7 @@ rx_displaynames <- function() {
 rx_brands <- function(ingredientids) {
   ingredientids <- paste(ingredientids, collapse = ' ')
   params <- list(ingredientids = ingredientids)
-  r <- GET(restBaseURL, path = paste0("REST/brands.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/brands.json", query = params)
   parse_results(r)
 }
 
@@ -299,7 +299,7 @@ rx_ndcs <- function(rxcui){
 #' @export
 rx_ndcproperties <- function(id) {
   params <- list(id = id)
-  r <- GET(restBaseURL, path = paste0("REST/ndcproperties.json"), query = params)
+  r <- GET(restBaseURL, path = "REST/ndcproperties.json", query = params)
   parse_results(r)
 }
 
@@ -340,7 +340,7 @@ rx_ndcstatus <-function(ndc, start = NULL, end = NULL, history = 0) {
   end <- date_helper(end)
   params <- list(ndc = as.character(ndc), start = start,
                  end = end, history = history)
-  r <- GET(restBaseURL, path = paste0('REST/ndcstatus.json'), query = params)
+  r <- GET(restBaseURL, path = 'REST/ndcstatus.json', query = params)
   parse_results(r)
 }
 
@@ -360,7 +360,7 @@ date_helper <- function(input_date){
 #' @return Property categories.
 #' @export
 rx_propCategories <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/propCategories.json"))
+  r <- GET(restBaseURL, path = "REST/propCategories.json")
   parse_results(r)
 }
 
@@ -372,7 +372,7 @@ rx_propCategories <- function() {
 #' @return Property names.
 #' @export
 rx_propnames <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/propnames.json"))
+  r <- GET(restBaseURL, path = "REST/propnames.json")
   parse_results(r)
 }
 
@@ -434,7 +434,7 @@ rx_related_tty <- function(rxcui, tty){
 #' @return Relationship names.
 #' @export
 rx_relatypes <- function() {
-  r <- GET(restBaseURL, path = paste0("REST/relatypes.json"))
+  r <- GET(restBaseURL, path = "REST/relatypes.json")
   parse_results(r)
 }
 
@@ -500,7 +500,7 @@ rx_property <- function(rxcui, propName){
 #' @return Abbreviated source types.
 #' @export
 rx_sourcetypes<- function() {
-  r <- GET(restBaseURL, path = paste0("REST/sourcetypes.json"))
+  r <- GET(restBaseURL, path = "REST/sourcetypes.json")
   parse_results(r)
 }
 
@@ -517,7 +517,7 @@ rx_sourcetypes<- function() {
 #' @export
 rx_spellingsuggestions <- function(name) {
   params <- list(name = name)
-  r <- GET(restBaseURL, path = paste0("REST/spellingsuggestions.json"),
+  r <- GET(restBaseURL, path = "REST/spellingsuggestions.json",
            query = params)
   parse_results(r)
 }
